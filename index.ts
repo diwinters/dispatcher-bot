@@ -339,8 +339,27 @@ async function checkMessages() {
 
 async function main() {
     console.log('Starting Dispatcher Bot...');
-    await agent.login({ identifier: process.env.BLUESKY_USERNAME!, password: process.env.BLUESKY_PASSWORD! });
-    console.log('Logged in as:', agent.session?.did);
+
+    const username = process.env.BLUESKY_USERNAME;
+    const password = process.env.BLUESKY_PASSWORD;
+
+    if (!username || !password) {
+        console.error('MISSING CREDENTIALS: BLUESKY_USERNAME and BLUESKY_PASSWORD must be set in .env');
+        // Keep process alive to prevent restart loop
+        setInterval(() => {}, 1000 * 60 * 60); 
+        return;
+    }
+
+    try {
+        await agent.login({ identifier: username, password: password });
+        console.log('Logged in as:', agent.session?.did);
+    } catch (error) {
+        console.error('LOGIN FAILED:', error);
+        console.error('Process will stay alive to prevent restart loop. Please fix .env and restart.');
+        // Keep process alive to prevent restart loop
+        setInterval(() => {}, 1000 * 60 * 60);
+        return;
+    }
 
     // Initial list fetch
     await refreshDriverLists();
