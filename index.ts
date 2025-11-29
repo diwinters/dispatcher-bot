@@ -6,7 +6,7 @@ dotenv.config();
 
 // Constants
 const MARKETPLACE_ADMIN_DID = 'did:plc:v576dt52yejwpijgyx7b6cwh';
-const DM_SERVICE_HEADERS = { "atproto-proxy": "did:web:api.bsky.chat" };
+const DM_SERVICE_HEADERS = { "atproto-proxy": "did:web:api.bsky.chat#bsky_chat" };
 const CHECK_INTERVAL_MS = 5000; // Check messages every 5 seconds
 const LIST_REFRESH_INTERVAL_MS = 5 * 60 * 1000; // Refresh lists every 5 minutes
 const DISPATCH_INTERVAL_MS = 30 * 1000; // Notify next driver every 30 seconds
